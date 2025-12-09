@@ -38,16 +38,12 @@ else()
 endif()
 add_link_options(-Wno-interference-size -fsanitize=address,undefined,leak)
 
-# add quickstructs library from src/quickstructs/
-# add_library(quickstructs
-#     src/quickstructs/
-# )
-
 # Compiler flags and other goodies
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(GTest REQUIRED)
+find_package(Threads)
 include(FetchContent)
 
 include_directories("${CMAKE_SOURCE_DIR}/include")
@@ -73,28 +69,29 @@ file(GLOB_RECURSE TEST_SOURCES
     "${CMAKE_SOURCE_DIR}/tests/test.cc"
 )
 
-add_executable(unit_tests
+add_executable(quick_tests
     ${TEST_SOURCES}
 )
 
-set_target_properties(unit_tests PROPERTIES
+set_target_properties(quick_tests PROPERTIES
     CXX_STANDARD 23
     CXX_STANDARD_REQUIRED YES
 )
 
-target_include_directories(unit_tests PRIVATE
+target_include_directories(quick_tests PRIVATE
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/tests        # For test utilities and headers
     ${CMAKE_CURRENT_BINARY_DIR}      # For generated files
 )
 
-target_link_libraries(unit_tests PRIVATE
+target_link_libraries(quick_tests PRIVATE
     GTest::gtest
     GTest::gtest_main
+    Threads::Threads
 )
 
 # Register tests with CTest
-add_test(NAME unit_tests COMMAND unit_tests)
+add_test(NAME quick_tests COMMAND quick_tests)
 
 # ============================================================================
 # Benchmarking Configuration
@@ -130,4 +127,4 @@ if(BENCHMARK_SOURCES)
 endif()
 
 # Optional: Use gtest_discover_tests for better test reporting
-gtest_discover_tests(unit_tests)
+gtest_discover_tests(quick_tests)

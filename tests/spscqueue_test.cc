@@ -12,14 +12,8 @@
 
 class SPSCQueueTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    // p_test_obj = quick::structs::SPSCQueue<int, 1024UL>;
-  }
-
-  void TearDown() override {
-    // Clean up
-    // p_test_obj.reset();
-  }
+  void SetUp() override {}
+  void TearDown() override {}
 
   quick::structs::SPSCQueue<int, 1024UL> p_test_obj;
 };
