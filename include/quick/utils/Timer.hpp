@@ -26,19 +26,17 @@ class Timer {
 
   void stop() {
     std::chrono::microseconds dur = elapsed();
-    std::ostringstream oss;
-    oss << "\033[35m"
-        << "[TIMER] " << m_scope_name << " took ≈ " << dur / 1us << "us"
-        << " ≈ "
-        << std::chrono::duration_cast<std::chrono::seconds>(dur).count()
-        << "s\n"
-        << "\033[0m";
-    std::cout << oss.str() << std::flush;
+    // std::ostringstream oss;
+    // oss << "\033[35m"
+    //     << "[TIMER] " << m_scope_name << " took ≈ " << dur / 1us << "us"
+    //     << " ≈ "
+    //     << std::chrono::duration_cast<std::chrono::seconds>(dur).count()
+    //     << "s\n"
+    //     << "\033[0m";
+    // std::cout << oss.str() << std::flush;
     /// @todo Switch to C++23 print
-    // std::print("{}[Timer] {} took {}ns",
-    //     std::chrono::utc_clock::now(),
-    //     m_scope_name,
-    //     dur.count());
+    std::print("{}[Timer] {} took {}ns", std::chrono::utc_clock::now(),
+               m_scope_name, dur.count());
   }
 
   void reset() { m_start_timepoint = clock::now(); }
