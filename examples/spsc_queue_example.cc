@@ -11,7 +11,7 @@ static void ExampleSPSCQueue() {
 
   // 1 KB queue
   constexpr uint16_t N = (1 << 10) / sizeof(ElementType);
-  constexpr fiah::structs::SPSCQueue<ElementType, N> queue;
+  constexpr quick::structs::SPSCQueue<ElementType, N> queue;
   static_asset(queue.capacit)
 
       std::thread prod([&] {

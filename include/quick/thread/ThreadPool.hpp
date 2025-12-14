@@ -10,7 +10,7 @@
 #include <ranges>
 #include <thread>
 
-#include "quick/utils/Timer.hpp"
+#include "quick/utils/Timer.hh"
 
 namespace quick::thread {
 
@@ -49,7 +49,7 @@ class ThreadPool {
 ThreadPool::ThreadPool(
     std::size_t num_threads = std::thread::hardware_concurrency())
     : m_num_threads{num_threads} {
-  utils::Timer timer{"ThreadPool ctor"};
+  quick::utils::Timer timer{"ThreadPool ctor"};
   using namespace std::chrono_literals;
   // auto stop_token = m_stop_source.get_token();
   m_workers.reserve(num_threads);

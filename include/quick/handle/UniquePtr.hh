@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace quick::memory {
+namespace quick::handle {
 
 /// @brief Default deleter that calls delete on the Pointer_T
 template <typename T>
@@ -306,4 +306,4 @@ template <typename T, typename D>
   return static_cast<bool>(ptr);
 }
 
-}  // namespace quick::memory
+}  // namespace quick::handle

@@ -73,34 +73,40 @@ message("************************************************************")
 # Testing Configuration
 # ============================================================================
 
-file(GLOB_RECURSE TEST_SOURCES
-    "${CMAKE_SOURCE_DIR}/tests/*_test.cc"
-    "${CMAKE_SOURCE_DIR}/tests/test.cc"
-)
+# Only build tests if this is the main project (not included via FetchContent)
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  file(GLOB_RECURSE TEST_SOURCES
+      "${CMAKE_SOURCE_DIR}/tests/*_test.cc"
+      "${CMAKE_SOURCE_DIR}/tests/test.cc"
+  )
 
-add_executable(quick_tests
-    ${TEST_SOURCES}
-)
+  add_executable(quick_tests
+      ${TEST_SOURCES}
+  )
 
-set_target_properties(quick_tests PROPERTIES
-    CXX_STANDARD 23
-    CXX_STANDARD_REQUIRED YES
-)
+  set_target_properties(quick_tests PROPERTIES
+      CXX_STANDARD 23
+      CXX_STANDARD_REQUIRED YES
+  )
 
-target_include_directories(quick_tests PRIVATE
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/tests        # For test utilities and headers
-    ${CMAKE_CURRENT_BINARY_DIR}      # For generated files
-)
+  target_include_directories(quick_tests PRIVATE
+      ${CMAKE_SOURCE_DIR}/include
+      ${CMAKE_SOURCE_DIR}/tests        # For test utilities and headers
+      ${CMAKE_CURRENT_BINARY_DIR}      # For generated files
+  )
 
-target_link_libraries(quick_tests PRIVATE
-    GTest::gtest
-    GTest::gtest_main
-    Threads::Threads
-)
+  target_link_libraries(quick_tests PRIVATE
+      GTest::gtest
+      GTest::gtest_main
+      Threads::Threads
+  )
 
-# Register tests with CTest
-add_test(NAME quick_tests COMMAND quick_tests)
+  # Register tests with CTest
+  add_test(NAME quick_tests COMMAND quick_tests)
+  
+  # Optional: Use gtest_discover_tests for better test reporting
+  gtest_discover_tests(quick_tests)
+endif()
 
 # ============================================================================
 # Benchmarking Configuration
@@ -134,6 +140,3 @@ if(BENCHMARK_SOURCES)
         benchmark::benchmark_main
     )
 endif()
-
-# Optional: Use gtest_discover_tests for better test reporting
-gtest_discover_tests(quick_tests)

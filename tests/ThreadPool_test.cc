@@ -8,8 +8,8 @@
 #include <iostream>
 #include <memory>
 
-#include "quick/structs/SPSCQueue.hpp"
-#include "quick/utils/Timer.hpp"
+#include "quick/structs/SPSCQueue.hh"
+#include "quick/utils/Timer.hh"
 #include "test_utils.hh"
 // clang-format off
 class ThreadPoolTest : public ::testing::Test {

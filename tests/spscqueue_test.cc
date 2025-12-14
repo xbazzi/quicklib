@@ -6,9 +6,9 @@
 #include <iostream>
 #include <ranges>
 
-#include "quick/utils/Timer.hpp" 
+#include "quick/utils/Timer.hh" 
 #include "test_utils.hh" 
-#include "quick/structs/SPSCQueue.hpp"
+#include "quick/structs/SPSCQueue.hh"
 // clang-format on
 
 class SPSCQueueTest : public ::testing::Test {
