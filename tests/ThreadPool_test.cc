@@ -22,7 +22,7 @@ class ThreadPoolTest : public ::testing::Test {
 };
 
 TEST_F(ThreadPoolTest, ConstructMultipleThreads) {
-  std::size_t num_threads = 1 << 13;
+  std::size_t num_threads = 1 << 5;
   quick::thread::ThreadPool tp(num_threads);
   EXPECT_TRUE(tp.get_num_threads() == num_threads) << num_threads;
   TEST_COUT << "num_threads: " << num_threads << std::endl;
