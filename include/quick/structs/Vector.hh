@@ -1,44 +1,16 @@
-// #include <cstddef>
+#pragma once
+
 #include <algorithm>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
-#include <iostream>
 #include <memory>
 #include <new>
-#include <string>
 #include <type_traits>
 
-void *operator new(std::size_t size)
+namespace quick::structs
 {
-    void *ptr = std::malloc(size); // Most implementations use malloc
-    if (!ptr)
-        throw std::bad_alloc();
-    std::fprintf(stderr, "[ALLOC] %zu bytes at %p\n", size,
-                 ptr); // Use stderr to avoid recursion
-    return ptr;
-}
-
-void operator delete(void *ptr) noexcept
-{
-    if (!ptr)
-        return;
-    std::fprintf(stderr, "[FREE] %p\n", ptr);
-    std::free(ptr);
-}
-
-// overload for when compiler can determine the size ahead of the call
-void operator delete(void *ptr, std::size_t size) noexcept
-{
-    if (!ptr)
-        return;
-    std::fprintf(stderr, "[FREE] %zu bytes at %p\n", size, ptr);
-    std::free(ptr);
-}
-
-namespace quick
-{
-template <typename Element> class vector
+template <typename Element> class Vector
 {
   private:
     std::uint64_t m_size{0};
@@ -86,11 +58,11 @@ template <typename Element> class vector
     }
 
   public:
-    vector() : m_size{0}, p_arr{static_cast<Element *>(::operator new(sizeof(Element)))}
+    Vector() : m_size{0}, p_arr{static_cast<Element *>(::operator new(sizeof(Element)))}
     {
     }
 
-    vector(std::uint64_t size) : m_size{size}
+    Vector(std::uint64_t size) : m_size{size}
     {
         m_cap = std::max<std::uint64_t>(1ULL, size);
         p_arr = _allocate(m_cap);
@@ -100,7 +72,7 @@ template <typename Element> class vector
         }
     }
 
-    ~vector()
+    ~Vector()
     {
         std::destroy_n(p_arr, m_size);
         ::operator delete(p_arr);
@@ -176,44 +148,4 @@ template <typename Element> class vector
         std::destroy_at(p_arr + m_size);
     }
 };
-} // namespace quick
-
-class Widget
-{
-    std::string name;
-    int id;
-
-  public:
-    Widget(const std::string &n, int i) : name(n), id(i)
-    {
-        std::cout << "  → Widget(" << n << ", " << i << ") constructed\n";
-    }
-
-    Widget(const Widget &other) : name(other.name), id(other.id)
-    {
-        std::cout << "  → Widget COPIED\n";
-    }
-
-    Widget(Widget &&other) noexcept : name(std::move(other.name)), id(other.id)
-    {
-        std::cout << "  → Widget MOVED\n";
-    }
-
-    ~Widget()
-    {
-        std::cout << "  → Widget(" << name << ") destroyed\n";
-    }
-};
-
-int main()
-{
-    std::cout << "=== push_back: Creates temporary, then moves ===\n";
-    quick::vector<Widget> vec1;
-    vec1.push_back(Widget("Alpha", 1)); // Temporary + Move
-
-    std::cout << "\n=== emplace_back: Constructs directly (NO temporary!) ===\n";
-    quick::vector<Widget> vec2;
-    vec2.emplace_back("Beta", 2); // Direct construction - cleaner!
-
-    std::cout << "\n=== Done ===\n";
-}
+} // namespace quick::structs
