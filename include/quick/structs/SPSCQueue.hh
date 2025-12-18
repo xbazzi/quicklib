@@ -172,6 +172,5 @@ template <class T, std::uint64_t CapacityPow2> class SPSCQueue
     }
 };
 /// @example spsc_queue_example.cc
-/// An example in UniquePtr (delete this )
 
 } // End namespace quick::structs

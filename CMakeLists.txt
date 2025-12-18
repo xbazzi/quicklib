@@ -112,12 +112,14 @@ endif()
 # Benchmarking Configuration
 # ============================================================================
 
-find_package(benchmark REQUIRED)
+# Only build benchmarks if this is the main project
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  find_package(benchmark REQUIRED)
 
-# Collect all benchmark source files
-file(GLOB_RECURSE BENCHMARK_SOURCES
-    "${CMAKE_SOURCE_DIR}/benchmarks/*_benchmark.cc"
-)
+  # Collect all benchmark source files
+  file(GLOB_RECURSE BENCHMARK_SOURCES
+      "${CMAKE_CURRENT_SOURCE_DIR}/benchmarks/*_benchmark.cc"
+  )
 
 if(BENCHMARK_SOURCES)
     add_executable(quick_benchmarks
@@ -139,6 +141,7 @@ if(BENCHMARK_SOURCES)
         benchmark::benchmark
         benchmark::benchmark_main
     )
+endif()
 endif()
 
 # ============================================================================

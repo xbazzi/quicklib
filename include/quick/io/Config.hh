@@ -9,7 +9,7 @@
 #include "quick/utils/Logger.hh"
 #include "quick/utils/TomlParser.hh"
 
-namespace quick::io
+namespace quick
 {
 
 class Config
@@ -74,4 +74,4 @@ class Config
     // const std::string& get_market_protocol() const noexcept;
 };
 
-} // namespace quick::io
+} // namespace quick
