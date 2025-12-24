@@ -7,15 +7,15 @@ Some of the library is production-ready; some is not. Here is a table with the l
 
 | Directory / File                              | Completion Estimate | Production-Ready?              | Basis                                                                                                         |
 | --------------------------------------------- | ------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| **[SpinMutex][1]**                            | 85%                 | **Beta**                      | Almost ready. Still needs ISA-specific handling. |
-| **[SPSCQueue][2]**                                 | 60%                  | **Alpha**                      | Only use this queue to play around. Still needs a few optimizations.                       |
+| **[SpinMutex][1]**                            | 85%                 | **Beta**                      | Production worthy, but barely. Still needs ISA-specific handling. |
+| **[ThreadPool][2]**                            | 85%                 | **Alpha**     |                Technically ready, but can be made significantly more performant.    |                                   
 | **[UniquePtr][3]**                                    | 95%                  | **Yes**                      | Ready to go.                                                             |
-| **[ThreadPool][3]**                            | 70%                 | **Alpha**     |                Technically ready, but can be made significantly more performant.                                       
-| **[memory/][4]**                                  | 85%                 | **Beta**                      | Some of these might be faster than glibc, some might be slower. There is a lot of potential for speedups through vectorization and other optimizations. Avoid for serious projects (for now).                                             |
+| **[SPSCQueue][4]**                                 | 60%                  | **Alpha**                      | Only use this queue to play around. Still needs a few optimizations.                       |
+| **[memory/][5]**                                  | 85%                 | **Beta**                      | Some of these might be faster than glibc, some might be slower. There is a lot of potential for speedups through vectorization and other optimizations. Use at your own risk while I add different code paths for different sizes.                                             |
 
-[1]: https://github.com/xbazzi/quicklib/tree/master/include/quick "quicklib/include/quick at master · xbazzi/quicklib · GitHub"
-[2]: https://github.com/xbazzi/quicklib/tree/master/examples "quicklib/examples at master · xbazzi/quicklib · GitHub"
-[3]: https://github.com/xbazzi/quicklib/tree/master/tests "quicklib/tests at master · xbazzi/quicklib · GitHub"
-[4]: https://github.com/xbazzi/quicklib/tree/master "GitHub - xbazzi/quicklib: Low-latency library"
-
+[1]: https://github.com/xbazzi/quicklib/tree/master/include/quick/thread/SpinMutex.hpp "quicklib/include/quick at master · xbazzi/quicklib · GitHub"
+[2]: https://github.com/xbazzi/quicklib/tree/master/include/quick/thread/ThreadPool.hpp "quicklib/examples at master · xbazzi/quicklib · GitHub"
+[3]: https://github.com/xbazzi/quicklib/tree/master/include/quick/handle/UniquePtr.hpp "quicklib/tests at master · xbazzi/quicklib · GitHub"
+[4]: https://github.com/xbazzi/quicklib/tree/master/include/quick/structs/SPSCQueue.hh "GitHub - xbazzi/quicklib: Low-latency library"
+[5]: https://github.com/xbazzi/quicklib/tree/master/include/quick/memory/ "GitHub - xbazzi/quicklib: Low-latency library"
 
